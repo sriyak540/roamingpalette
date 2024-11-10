@@ -2,21 +2,25 @@ import React from "react";
 import Post from './Post'; 
 
 const Posts = (props) => {
-    const tags = new Array();
+    const { items, isLoggedIn } = props;  
+
     return (
         <div> 
-            {props.items.map((post) => (
+            {items.map((post) => (
                 <Post
-                    key = {post.id}
-                    name ={post.username}
-                    img = {post.image}
-                    location = {post.location}
-                    description = {post.description}
-                    tags = {post.tags.split(" ")}
+                    key={post.id}
+                    id={post.id} 
+                    name={post.username}
+                    img={post.image}
+                    location={post.location}
+                    description={post.description}
+                    tags={post.tags.split(" ")}
+                    isLoggedIn={isLoggedIn} 
+                    
                 />
             ))}
         </div>
-    )
+    );
 }
 
 export default Posts;

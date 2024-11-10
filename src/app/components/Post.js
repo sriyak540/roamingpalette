@@ -2,9 +2,12 @@ import React from 'react';
 import Card from './Card';
 
 const Post = (props) => {
+    const isLoggedIn = props.isLoggedIn || false;
     return (
-        <div className="w-full">
+        <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
             <Card className="grid grid-cols-2 gap-5 p-5 border-2 rounded-lg w-full max-w-screen-lg mx-auto mt-10 bg-white">
+                
+
                 {/* Left Section: Image and Icons */}
                 <div className="space-y-4">
                     {/* User Info */}
@@ -16,7 +19,7 @@ const Post = (props) => {
                     {/* Image */}
                     <img 
                         src={props.img} 
-                        className="w-fit h-fitobject-cover rounded-lg shadow-md " 
+                        className="w-fit h-fit object-cover rounded-lg shadow-md" 
                         alt={props.name} 
                     />
 
@@ -27,9 +30,17 @@ const Post = (props) => {
                         <span className="cursor-pointer ml-10">⎘</span>
                     </div>
                 </div>
-                
+
                 {/* Right Section: Location, Description, and Tags */}
-                <div className="flex flex-col justify-between pl-5">
+                <div className="relative flex flex-col justify-between pl-5">
+                    {isLoggedIn && (
+                        <button
+                            // onClick={() => props.deletePost(props.id)}  {/* Uncomment this line when ready */}
+                            className="absolute top-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
+                        >
+                            X
+                        </button>
+                    )}
                     {/* Location */}
                     <h2 className="text-teal-700 hover:underline cursor-pointer flex items-center font-sans font-medium text-3xl mb-2 mt-5">
                         <span role="img" aria-label="location-pin" className="text-orange-500 pr-2">📍</span>
@@ -44,7 +55,7 @@ const Post = (props) => {
                         {props.tags.map((tag, index) => (
                             <span 
                                 key={index} 
-                                className="text-amber-500 hover:underline cursor-pointer font-sans italic text-xl"
+                                className="text-amber-500 hover:underline cursor-pointer font-sans text-xl"
                             >
                                 #{tag}
                             </span>
