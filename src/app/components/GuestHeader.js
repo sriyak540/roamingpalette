@@ -6,11 +6,11 @@ function GuestHeader() {
 
     const loginHandler = () => {
         setIsLoggedIn(true); // Simulate login
-    }
+    };
 
     const logoutHandler = () => {
         setIsLoggedIn(false); // Simulate logout
-    }
+    };
 
     return (
         <div> 
@@ -30,34 +30,31 @@ function GuestHeader() {
                     />
                 </div>
 
-                <div className="flex items-center space-x-4 ml-auto">
-                    {/* Show the buttons depending on the login state */}
+                <div className="flex items-center justify-between space-x-4">
+                    {/* Conditionally render buttons based on login state */}
                     {!isLoggedIn ? (
                         <>
-                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-serif" type='submit' onClick={loginHandler}>Sign Up</button>
-                            <button className="p-3 pr-4 pl-4 text-center hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-serif" type='submit' onClick={loginHandler}>Login</button>
+                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-serif" type='button' onClick={loginHandler}>Sign Up</button>
+                            <button className="p-3 pr-4 pl-4 text-center hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-serif" type='button' onClick={loginHandler}>Login</button>
                         </>
                     ) : (
                         <>
-                            {/* Post button */}
-                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-serif" type='submit'>
+                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-serif" type='button'>
                                 Post
                             </button>
-                            {/* Logout button */}
-                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-serif" type='submit' onClick={logoutHandler}>
+                            <button className="p-3 text-center hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-serif" type='button' onClick={logoutHandler}>
                                 Logout
                             </button>
                         </>
                     )}
                 </div>
-
             </header>
-
+            
             <div className="relative w-full h-full">
                 <img src="/header-image.svg" alt="header image" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-zinc-900 flex items-center justify-center">
                     <div className="w-2/4"/>
-                    <h1 className="p-3  pr-6 text-6xl font-serif text-white text-right w-2/4 font-light">Explore <br/>the <br/>palettes of <br/>the world</h1>
+                    <h1 className="p-3 pr-6 text-6xl font-serif text-white text-right w-2/4 font-light">Explore <br/>the <br/>palettes of <br/>the world</h1>
                 </div>
             </div>
         </div>
