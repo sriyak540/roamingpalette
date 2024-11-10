@@ -1,21 +1,21 @@
 import React from "react";
-import Card from './Card';
 import Post from './Post'; 
-import styles from './Posts';
 
 const Posts = (props) => {
+    const tags = new Array();
     return (
-        <Card className="container">
+        <div> 
             {props.items.map((post) => (
-                <Post className="post"
+                <Post
                     key = {post.id}
-                    posting = {post.image}
+                    name ={post.username}
+                    img = {post.image}
                     location = {post.location}
                     description = {post.description}
-                    tags = {post.tags}
+                    tags = {post.tags.split(" ")}
                 />
             ))}
-        </Card>
+        </div>
     )
 }
 
