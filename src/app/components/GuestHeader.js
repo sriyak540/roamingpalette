@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-function GuestHeader() {
+function GuestHeader({isLoggedIn, onLogin, onLogout, username}) {
     const [searchQuery, setSearchQuery] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(false);
-    const [username, setUsername] = useState('');
+    const [loginUsername, setLoginUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const loginHandler = () => {
@@ -13,8 +12,8 @@ function GuestHeader() {
 
     const submitLogin = (e) => {
         e.preventDefault();
-        if (username && password) {
-            setIsLoggedIn(true);
+        if (loginUsername && password) {
+            onLogin(loginUsername);
             setShowLoginForm(false);
         } else {
             alert('Please enter both username and password');
@@ -22,7 +21,7 @@ function GuestHeader() {
     };
 
     const logoutHandler = () => {
-        setIsLoggedIn(false);
+        onLogout();
     };
 
     return (
@@ -69,8 +68,8 @@ function GuestHeader() {
                                 <input
                                     id="username"
                                     type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    value={loginUsername}
+                                    onChange={(e) => setLoginUsername(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded mt-1"
                                     placeholder="Enter your username"
                                     required

@@ -4,8 +4,13 @@ import GuestHeader from './components/GuestHeader';
 import AddPost from './components/AddPost';
 import React, {useState} from "react";
 import Posts from './components/Posts';
+import UserBar from './components/UserBar';
 
 export default function Home() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("")
+  const [showAddPost, setShowAddPost] = useState(false);
 
   const [posts, setPosts] = useState([
     {
@@ -33,10 +38,32 @@ export default function Home() {
         image: '/thai-curry-image.svg'
     },
   ]);
+  const handleLogin = (user) => {
+    setUsername(user);
+    setIsLoggedIn(true);
+};
 
-  const addPostHandler = newPost => {
+const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername("");
+};
+
+  const addPostHandler = (newPost) => {
     setPosts(prevPosts => [...prevPosts, newPost])
   }
+  const handleCreate = () => {
+    setShowAddPost(true);
+    console.log("Create button clicked");
+};
+
+const handleFilter = () => {
+    console.log("Filter button clicked");
+};
+
+const handleCancel = () => {
+  setShowAddPost(false); 
+};
+
 
   return(
     <div> 
@@ -44,15 +71,33 @@ export default function Home() {
         if (user != logged in ) {
           guestheader and pages
         } else if (user == logged in) {
-          display authenitcated user homepage and pages
+          display authenticated user homepage and pages
           add post page will be availbe in this else statement 
         }
       */}
-      <GuestHeader/>
+      <GuestHeader
+        isLoggedIn={isLoggedIn} 
+        onLogin={handleLogin} 
+        onLogout={handleLogout} 
+        username={username}
+      />
       <div className="w-full p-5 shadow-slate-50 rounded-lg mt-5 mr-auto"> 
+
+      {isLoggedIn && (
+        <UserBar 
+         username={username} 
+         onCreate={handleCreate} 
+         onFilter={handleFilter} 
+         />
+      )}
+
+       
+      {showAddPost && (
+        <AddPost username={username} onAddPost={addPostHandler} onCancel={handleCancel} />
+      )} 
+
         <Posts items={posts}/>
       </div>
-      {/* <AddPost onAddPost = {addPostHandler}/> */}
     </div>
   );
 }
