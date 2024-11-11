@@ -32,7 +32,7 @@ const Post = (props) => {
                 </div>
 
                 {/* Right Section: Location, Description, and Tags */}
-                <div className="relative flex flex-col justify-between pl-5">
+                <div className="relative flex flex-col mt-16 justify-between pl-5">
                     {isLoggedIn && (
                         <button
                             //onClick={() => props.deletePost(props.id)}  {/* Uncomment this line when ready */}
@@ -42,7 +42,7 @@ const Post = (props) => {
                         </button>
                     )}
                     {/* Location */}
-                    <h2 className="text-teal-700 hover:underline cursor-pointer mt-16 flex items-center font-sans font-medium text-3xl mb-2 mt-5">
+                    <h2 className="text-teal-700 hover:underline cursor-pointer flex items-center font-sans font-medium text-3xl mb-2 mt-5">
                         <span role="img" aria-label="location-pin" className="text-orange-500 pr-2">📍</span>
                         {props.location}
                     </h2>
@@ -51,7 +51,7 @@ const Post = (props) => {
                     <p className="pt-2 text-gray-700 font-sans text-3xl flex-grow">{props.description}</p>
 
                     {/* Hashtags */}
-                    <div className="flex flex-wrap pt-2 space-x-2">
+                    <div className="flex flex-wrap pt-2 mb-14 space-x-2">
                         {props.tags.map((tag, index) => (
                             <span 
                                 key={index} 

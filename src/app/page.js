@@ -38,43 +38,37 @@
           image: '/thai-curry-image.svg'
       },
     ]);
+
     const handleLogin = (user) => {
       setUsername(user);
       setIsLoggedIn(true);
-  };
+    };
 
-  const handleLogout = () => {
-      setIsLoggedIn(false);
-      setUsername("");
-  };
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setUsername("");
+    };
 
     const addPostHandler = (newPost) => {
       setPosts(prevPosts => [...prevPosts, newPost])
-    }
+    };
+
     const handleCreate = () => {
       setShowAddPost(true);
       console.log("Create button clicked");
-  };
+    };
 
-  const handleFilter = () => {
-      console.log("Filter button clicked");
-  };
+    const handleFilter = () => {
+        console.log("Filter button clicked");
+    };
 
-  const handleCancel = () => {
-    setShowAddPost(false); 
-  };
+    const handleCancel = () => {
+      setShowAddPost(false); 
+    };
 
 
     return(
       <div> 
-        {/* 
-          if (user != logged in ) {
-            guestheader and pages
-          } else if (user == logged in) {
-            display authenticated user homepage and pages
-            add post page will be availbe in this else statement 
-          }
-        */}
         <GuestHeader
           isLoggedIn={isLoggedIn} 
           onLogin={handleLogin} 
@@ -83,20 +77,20 @@
         />
         <div className="w-full p-5 shadow-slate-50 rounded-lg mt-5 mr-auto"> 
 
-        {isLoggedIn && (
-          <UserBar 
-          username={username} 
-          onCreate={handleCreate} 
-          onFilter={handleFilter} 
-          />
-        )}
+          {isLoggedIn && (
+            <UserBar 
+            username={username} 
+            onCreate={handleCreate} 
+            onFilter={handleFilter} 
+            />
+          )}
 
-        
-        {showAddPost && (
-          <AddPost username={username} onAddPost={addPostHandler} onCancel={handleCancel} />
-        )} 
+          
+          {showAddPost && (
+            <AddPost username={username} onAddPost={addPostHandler} onCancel={handleCancel} />
+          )} 
 
-  <Posts items={posts} isLoggedIn={isLoggedIn} />
+          <Posts items={posts} isLoggedIn={isLoggedIn} />
         </div>
       </div>
     );
