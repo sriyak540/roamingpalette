@@ -45,24 +45,24 @@
                         </div>
 
                         <div className="flex items-center space-x-4 z-10"> 
-        { !isLoggedIn ? (
-            <>
-                <button className="p-3 hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-sans font-semibold" onClick={loginHandler}>Sign Up</button>
-                <button className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold" onClick={loginHandler}>Login</button>
-            </>
-        ) : (
-            <Link href="/" legacyBehavior>
-                <a>
-                    <button
-                        onClick={logoutHandler}
-                        className="p-3 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-serif"
-                    >
-                        Logout
-                    </button>
-                </a>
-            </Link>
-        )}
-        </div>
+                            { !isLoggedIn ? (
+                                <>
+                                    <button className="p-3 hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-sans font-semibold" onClick={loginHandler}>Sign Up</button>
+                                    <button className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold" onClick={loginHandler}>Login</button>
+                                </>
+                            ) : (
+                                <Link href="/" legacyBehavior>
+                                    <a>
+                                        <button
+                                            onClick={logoutHandler}
+                                            className="p-3 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-semibold font-sans"
+                                        >
+                                            Logout
+                                        </button>
+                                    </a>
+                                </Link>
+                            )}
+                        </div>
                     </header>
 
                     {/* Login Form Modal */}
