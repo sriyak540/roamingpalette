@@ -18,7 +18,7 @@ function UserBar({ username, onCreate, onFilter }) {
                     className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
                     onClick={onFilter}
                 >
-                    Filter
+                    ≡ Filter
                 </button>
             </div>
         </div>

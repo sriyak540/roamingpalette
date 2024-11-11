@@ -71,14 +71,14 @@ const AddPost = ({username, onAddPost, onCancel}) => {
             {/* Submit Button */}
             <button 
                 type="submit" 
-                className="py-2 px-6 bg-teal-700 text-white rounded-lg hover:bg-blue-700">
+                className="py-2 px-6 bg-teal-700 text-white rounded-lg hover:bg-teal-600">
                 Post
             </button>
         </div>
                     {/* Username */}
                     <div className="inline-flex text-left">
                         <span className="p-6 mb-4 cursor-pointer bg-orange-600 rounded-full border-2 border-gray-400"></span>
-                        <p className="text-lg font-semibold text-gray-700">{postingUser || "Guest"}</p>
+                        <p className="text-lg pt-3 pl-3 font-semibold text-gray-700">{postingUser || "Guest"}</p>
                     </div>
 
                     {/* Post Description */}
@@ -108,7 +108,7 @@ const AddPost = ({username, onAddPost, onCancel}) => {
                         <button 
                             type="button" 
                             onClick={imageHandler} 
-                            className="py-2 px-4 bg-teal-700 text-white rounded-lg hover:bg-blue-600">
+                            className="py-2 px-4 bg-teal-700 text-white rounded-lg hover:bg-teal-600">
                             Add Image
                         </button>
 
@@ -116,7 +116,7 @@ const AddPost = ({username, onAddPost, onCancel}) => {
                         <button 
                             type="button" 
                             onClick={locationHandler} 
-                            className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-orange-500">
+                            className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-600">
                             Add Location
                         </button>
                     </div>
