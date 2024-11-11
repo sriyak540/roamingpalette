@@ -35,14 +35,14 @@ const Post = (props) => {
                 <div className="relative flex flex-col justify-between pl-5">
                     {isLoggedIn && (
                         <button
-                            // onClick={() => props.deletePost(props.id)}  {/* Uncomment this line when ready */}
+                            //onClick={() => props.deletePost(props.id)}  {/* Uncomment this line when ready */}
                             className="absolute top-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
                         >
                             X
                         </button>
                     )}
                     {/* Location */}
-                    <h2 className="text-teal-700 hover:underline cursor-pointer flex items-center font-sans font-medium text-3xl mb-2 mt-5">
+                    <h2 className="text-teal-700 hover:underline cursor-pointer mt-16 flex items-center font-sans font-medium text-3xl mb-2 mt-5">
                         <span role="img" aria-label="location-pin" className="text-orange-500 pr-2">📍</span>
                         {props.location}
                     </h2>
