@@ -13,6 +13,7 @@ function LoginPage() {
             setUsername(username);
             setPassword(password);
             navigate("/user");
+            sessionStorage.setItem('userId', username);
         } else {
             alert("Please enter a username and password.");
         }

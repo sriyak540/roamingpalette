@@ -4,13 +4,14 @@ import Posts from "../Posts";
 import UserBar from "../UserBar";
 import { useRouter } from 'next/navigation';
 import { useNavigate, Link } from "react-router-dom";
-import { username } from "./LoginPage";
 
 
 
 function AuthUserPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [showAddPost, setShowAddPost] = useState(false);    
+    const [showAddPost, setShowAddPost] = useState(false);
+    let token = sessionStorage.getItem('userId'); 
+    const navigate = useNavigate();   
 
     const addPostHandler = (newPost) => {
       setPosts(prevPosts => [...prevPosts, newPost])
@@ -28,6 +29,12 @@ function AuthUserPage() {
     const handleCancel = () => {
       setShowAddPost(false); 
     };
+
+    const handleLogout = () => {
+        navigate("/");
+        sessionStorage.removeItem('userId');
+        sessionStorage.clear();
+    }
 
     const [posts, setPosts] = useState([
         {
@@ -76,11 +83,9 @@ function AuthUserPage() {
 
                 <div className="flex items-center space-x-4 z-10"> 
                     <button
-                        className="p-3 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-semibold font-sans"
+                        onClick={handleLogout} className="p-3 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-semibold font-sans"
                     >
-                        <Link to="/">
                             Logout
-                        </Link>
                     </button>
                 </div>
             </header>
@@ -95,13 +100,13 @@ function AuthUserPage() {
 
             <div className="w-full p-5 shadow-slate-50 rounded-lg mt-5 mr-auto">
                 <UserBar 
-                    username={username} 
+                    username={token} 
                     onCreate={handleCreate} 
                     onFilter={handleFilter} 
                 />
             
                 {showAddPost && (
-                    <AddPost username={username} onAddPost={addPostHandler} onCancel={handleCancel} />
+                    <AddPost username={token} onAddPost={addPostHandler} onCancel={handleCancel} />
                 )}
 
                 <Posts items={posts} isLoggedIn={true} />
