@@ -162,5 +162,4 @@ function GuestHeader({ isLoggedIn, onLogin, onLogout, onSignUp, username }) {
         </div>
     );
 }
-
 export default GuestHeader;
