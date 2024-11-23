@@ -1,8 +1,11 @@
+"use client";
 import React, { useState } from 'react';
-import Button from './Button';
-import Card from './Card';
+import Link from 'next/link';
+import {useRouter} from 'next/navigation';
+import Card from '../components/Card';
 
-const AddPost = ({username, onAddPost, onCancel}) => {
+const AddPost = ({username, onAddPost}) => {
+    const router = useRouter();
     const [postingUser, setPostingUser] = useState(username);
     const [enteredDescription, setDescription] = useState('');
     const [enteredTags, setTags] = useState('');
@@ -42,16 +45,23 @@ const AddPost = ({username, onAddPost, onCancel}) => {
             image: selectedImage
         };
 
-        onAddPost(post_data); // Call parent component's function to add post to the list
+        //onAddPost(post_data); // Call parent component's function to add post to the list
         console.log(post_data); // Log post data to console for verification
-        onCancel();
+       // onCancel();
         // clear form
         setPostingUser('');
         setDescription('');
-        setEnteredTags('');
-        useSelectedLayoutSegments(' ');
+        setTags('');
+        //useSelectedLayoutSegments(' ');
         setImage('');
         setLocation('');
+
+        /**HOW TO PASS DATA HERE AHHHHHHHH */
+        router.push({
+            pathname: "/",
+            query: { newPost: JSON.stringify(post_data) }
+          });
+          
     };
 
     return (
@@ -62,12 +72,11 @@ const AddPost = ({username, onAddPost, onCancel}) => {
             {/* Cancel Button */}
             <button
                 type="button"
-                onClick={onCancel}
+                onClick={() => router.push("/")}
                 className="text-sm text-gray-500 hover:text-gray-700"
             >
                 X
             </button>
-
             {/* Submit Button */}
             <button 
                 type="submit" 

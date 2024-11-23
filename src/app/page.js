@@ -1,13 +1,14 @@
   "use client";
 
   import GuestHeader from './components/GuestHeader';
-  import AddPost from './components/AddPost';
-  import React, {useState} from "react";
+  import React, {useState, useEffect} from "react";
   import Posts from './components/Posts';
   import UserBar from './components/UserBar';
+  //import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
   export default function Home() {
-
+    //const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("")
     const [showAddPost, setShowAddPost] = useState(false);
@@ -48,24 +49,29 @@
         setIsLoggedIn(false);
         setUsername("");
     };
+    const searchParams = useSearchParams();
+    const newPost = searchParams.get("newPost");
+
+
+    useEffect(() => {
+      if (newPost) {
+        setPosts((prevPosts) => [...prevPosts, JSON.parse(newPost)]);
+      }
+    }, [newPost]);
 
     const addPostHandler = (newPost) => {
       setPosts(prevPosts => [...prevPosts, newPost])
     };
 
     const handleCreate = () => {
-      setShowAddPost(true);
+      // setShowAddPost(true);
+      
       console.log("Create button clicked");
     };
 
     const handleFilter = () => {
         console.log("Filter button clicked");
     };
-
-    const handleCancel = () => {
-      setShowAddPost(false); 
-    };
-
 
     return(
       <div> 
@@ -87,7 +93,7 @@
 
           
           {showAddPost && (
-            <AddPost username={username} onAddPost={addPostHandler} onCancel={handleCancel} />
+            <AddPost username={username} onAddPost={addPostHandler} />
           )} 
 
           <Posts items={posts} isLoggedIn={isLoggedIn} />
