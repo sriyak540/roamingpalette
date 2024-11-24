@@ -3,6 +3,7 @@ import Card from './Card';
 
 const Post = (props) => {
     const isLoggedIn = props.isLoggedIn || false;
+    let token = sessionStorage.getItem('userId');
 
     return (
         <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
@@ -34,7 +35,7 @@ const Post = (props) => {
 
                 {/* Right Section: Location, Description, and Tags */}
                 <div className="relative flex flex-col justify-between pl-5">
-                    {isLoggedIn && (
+                    {isLoggedIn && props.name == token && (
                         <button
                             //onClick={handleDelete(props.username)}
                             className="absolute mt-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
