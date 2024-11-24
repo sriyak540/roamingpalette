@@ -51,7 +51,7 @@ function GuestHomepage() {
                 </div>
 
                 <div className="flex items-center space-x-4 z-10"> 
-                    <Link to="/login"><button className="p-3 hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-sans font-semibold">Sign Up</button></Link>
+                    <Link to="/signup"><button className="p-3 hover:underline cursor-pointer bg-orange-600 rounded-lg text-black font-sans font-semibold">Sign Up</button></Link>
                     <Link to="/login"><button className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold">Login</button></Link>
                 </div>
             </header>

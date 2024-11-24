@@ -3,6 +3,7 @@ import Card from './Card';
 
 const Post = (props) => {
     const isLoggedIn = props.isLoggedIn || false;
+
     return (
         <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
             <Card className="grid grid-cols-2 gap-5 p-5 border-2 rounded-lg w-full max-w-screen-lg mx-auto mt-10 bg-white">
@@ -19,7 +20,7 @@ const Post = (props) => {
                     {/* Image */}
                     <img 
                         src={props.img} 
-                        className="w-fit h-fit object-cover rounded-lg shadow-md" 
+                        className="w-full h-fit object-cover rounded-lg shadow-md" 
                         alt={props.name} 
                     />
 
@@ -35,7 +36,7 @@ const Post = (props) => {
                 <div className="relative flex flex-col justify-between pl-5">
                     {isLoggedIn && (
                         <button
-                            //onClick={() => props.deletePost(props.id)}  {/* Uncomment this line when ready */}
+                            //onClick={handleDelete(props.username)}
                             className="absolute mt-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
                         >
                             X

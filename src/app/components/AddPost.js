@@ -3,31 +3,40 @@ import Button from './Button';
 import Card from './Card';
 
 const AddPost = ({username, onAddPost, onCancel}) => {
-    const [postingUser, setPostingUser] = useState(username);
+    const [postingUser, setPostingUser] = useState(sessionStorage.getItem('userId'));
     const [enteredDescription, setDescription] = useState('');
     const [enteredTags, setTags] = useState('');
     const [selectedImage, setImage] = useState('');
     const [enteredLocation, setLocation] = useState('');
 
+    let enteredDescriptionToken = sessionStorage.getItem('enteredDescription');
+    let enteredTagsToken = sessionStorage.getItem('enteredTags'); 
+    let selectedImageToken = sessionStorage.getItem('selectedImage');
+    let enteredLocationToken = sessionStorage.getItem('enteredLocation');
+
     const descriptionHandler = (event) => {
         setDescription(event.target.value);
+        sessionStorage.setItem('enteredDescription', enteredDescription);
     };
     
     const tagHandler = (event) => {
         setTags(event.target.value);
+        sessionStorage.setItem('enteredTags', enteredTags);
     };
 
     const imageHandler = () => {
-        const imageURL = prompt("Enter Image URL:");
-        if (imageURL) {
-            setImage(imageURL);
+        const selectedImage = prompt("Enter Image URL:");
+        if (selectedImage) {
+            setImage(selectedImage);
+            sessionStorage.setItem('selectedImage', selectedImage);
         }
     };
 
     const locationHandler = () => {
-        const location = prompt("Enter Location:");
-        if (location) {
-            setLocation(location);
+        const enteredLocation = prompt("Enter Location:");
+        if (enteredLocation) {
+            setLocation(enteredLocation);
+            sessionStorage.setItem('enteredLocation', enteredLocation);
         }
     };
 
@@ -36,10 +45,10 @@ const AddPost = ({username, onAddPost, onCancel}) => {
 
         const post_data = {
             username: postingUser,
-            location: enteredLocation,
-            description: enteredDescription,
-            tags: enteredTags,
-            image: selectedImage
+            location: enteredLocationToken,
+            description: enteredDescriptionToken,
+            tags: enteredTagsToken,
+            image: selectedImageToken
         };
 
         onAddPost(post_data); // Call parent component's function to add post to the list
@@ -48,8 +57,8 @@ const AddPost = ({username, onAddPost, onCancel}) => {
         // clear form
         setPostingUser('');
         setDescription('');
-        setEnteredTags('');
-        useSelectedLayoutSegments(' ');
+        setTags('');
+        //useSelectedLayoutSegments('');
         setImage('');
         setLocation('');
     };

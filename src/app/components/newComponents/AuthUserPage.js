@@ -27,13 +27,19 @@ function AuthUserPage() {
     };
 
     const handleCancel = () => {
-      setShowAddPost(false); 
+        setShowAddPost(false);
+        sessionStorage.removeItem('enteredLocationToken');
+        sessionStorage.removeItem('enteredDescriptionToken');
+        sessionStorage.removeItem('enteredTagsToken');
+        sessionStorage.removeItem('selectedImageToken'); 
     };
+
+    
 
     const handleLogout = () => {
         navigate("/");
         sessionStorage.removeItem('userId');
-        sessionStorage.clear();
+        //sessionStorage.clear();
     }
 
     const [posts, setPosts] = useState([
@@ -109,7 +115,7 @@ function AuthUserPage() {
                     <AddPost username={token} onAddPost={addPostHandler} onCancel={handleCancel} />
                 )}
 
-                <Posts items={posts} isLoggedIn={true} />
+                <Posts items={posts} isLoggedIn={true}/>
             </div>
         </div>
     );
