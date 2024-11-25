@@ -4,6 +4,7 @@ import Card from './Card';
 const Post = (props) => {
     const isLoggedIn = props.isLoggedIn || false;
     let token = sessionStorage.getItem('userId');
+    
 
     return (
         <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
