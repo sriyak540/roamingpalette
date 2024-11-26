@@ -109,7 +109,7 @@ const AddPost = ({username, onAddPost, onCancel}) => {
                         <textarea
                             value={selectedImage}
                             onChange={imageHandler}
-                            placeholder="Enter image URL..."
+                            placeholder="Enter image URL here"
                             className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             rows="1"
                         />
@@ -119,7 +119,7 @@ const AddPost = ({username, onAddPost, onCancel}) => {
                         <textarea
                             value={enteredLocation}
                             onChange={locationHandler}
-                            placeholder="Enter tags here"
+                            placeholder="Enter location here"
                             className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             rows="1"
                         />
