@@ -32,6 +32,12 @@ function GuestHomepage() {
         },
     ]);
 
+    const filteredPosts = posts.filter((post) =>{
+        const tags = post.tags.toLowerCase();
+        const query = searchQuery.toLowerCase();
+        return tags.includes(query);
+    });
+
     return (
         <div>
             <header className="flex items-center justify-between p-2 bg-white">
@@ -65,7 +71,7 @@ function GuestHomepage() {
             </div>
 
             <div className="w-full p-5 shadow-slate-50 rounded-lg mt-5 mr-auto"> 
-                <Posts items={posts} />
+                <Posts items={filteredPosts} />
             </div>
         </div>
     );

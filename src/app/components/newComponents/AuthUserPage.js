@@ -22,25 +22,27 @@ function AuthUserPage() {
       console.log("Create button clicked");
     };
 
-    const handleFilter = () => {
-        console.log("Filter button clicked");
-    };
+    // const handleFilter = () => {
+    //     console.log("Filter button clicked");
+    // };
+
+    const filteredPosts = posts.filter((post) => {
+        post.tags.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     const handleCancel = () => {
         setShowAddPost(false);
-        sessionStorage.removeItem('enteredLocationToken');
-        sessionStorage.removeItem('enteredDescriptionToken');
-        sessionStorage.removeItem('enteredTagsToken');
-        sessionStorage.removeItem('selectedImageToken'); 
+        // sessionStorage.removeItem('enteredLocationToken');
+        // sessionStorage.removeItem('enteredDescriptionToken');
+        // sessionStorage.removeItem('enteredTagsToken');
+        // sessionStorage.removeItem('selectedImageToken'); 
     };
-
-    
 
     const handleLogout = () => {
         navigate("/");
         sessionStorage.removeItem('userId');
         //sessionStorage.clear();
-    }
+    };
 
     const [posts, setPosts] = useState([
         {
@@ -108,14 +110,14 @@ function AuthUserPage() {
                 <UserBar 
                     username={token} 
                     onCreate={handleCreate} 
-                    onFilter={handleFilter} 
+                    // onFilter={handleFilter} 
                 />
             
                 {showAddPost && (
                     <AddPost username={token} onAddPost={addPostHandler} onCancel={handleCancel} />
                 )}
 
-                <Posts items={posts} isLoggedIn={true}/>
+                <Posts items={filteredPosts} isLoggedIn={true}/>
             </div>
         </div>
     );
