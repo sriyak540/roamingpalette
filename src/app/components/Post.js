@@ -3,6 +3,7 @@ import Card from './Card';
 
 const Post = (props) => {
     const isLoggedIn = props.isLoggedIn || false;
+    const { id, onDelete } = props;
     let token = sessionStorage.getItem('userId');
 
     return (
@@ -38,6 +39,7 @@ const Post = (props) => {
                     {isLoggedIn && props.name == token && (
                         <button
                             //onClick={handleDelete(props.username)}
+                            onClick={onDelete}
                             className="absolute mt-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
                         >
                             X

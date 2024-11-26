@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Post from './Post'; 
 
 const Posts = (props) => {
-    const { items, isLoggedIn } = props;  
+    const { items, isLoggedIn, onDelete } = props;  
 
     return (
         <div> 
@@ -16,7 +16,7 @@ const Posts = (props) => {
                     description={post.description}
                     tags={post.tags.split(" ")}
                     isLoggedIn={isLoggedIn} 
-                    
+                    onDelete={() => onDelete(post.id)} 
                 />
             ))}
         </div>

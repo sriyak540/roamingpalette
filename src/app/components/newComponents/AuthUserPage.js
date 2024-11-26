@@ -50,6 +50,10 @@ function AuthUserPage() {
         setPosts(prevPosts => [...prevPosts, newPost])
     };
 
+    const deletePostHandler = (postId) => {
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    }
+
     const handleCreate = () => {
         setShowAddPost(true);
         console.log("Create button clicked");
@@ -111,7 +115,7 @@ function AuthUserPage() {
                     <AddPost username={token} onAddPost={addPostHandler} onCancel={handleCancel} />
                 )}
 
-                <Posts items={filteredPosts} isLoggedIn={true}/>
+                <Posts items={filteredPosts} isLoggedIn={true} onDelete={deletePostHandler} />
             </div>
         </div>
     );
