@@ -15,7 +15,7 @@ function AuthUserPage() {
             description:
                 "While the tender, curly noodles and warm savory broth build the foundation of a good ramen soup, the toppings and mix-ins make it just plain fun and can take the flavors of your bowl in a million and one directions.",
             tags: "ramen ramennoodles noodles vegetarian city country",
-            image: "/ramen-image.svg",
+            image: "/ramen-image.svg",        
         },
         {
             id: 1,
@@ -39,7 +39,7 @@ function AuthUserPage() {
     const token = sessionStorage.getItem("userId");
     const navigate = useNavigate();
 
-    // Filter posts dynamically based on search query
+    // FILTER POSTS dynamically based on search query
     const filteredPosts = posts.filter((post) =>
         post.tags.toLowerCase().includes(searchQuery.toLowerCase())
     );
