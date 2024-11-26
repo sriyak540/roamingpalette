@@ -1,13 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 const Post = (props) => {
     const isLoggedIn = props.isLoggedIn || false;
     const { id, onDelete } = props;
     let token = sessionStorage.getItem('userId');
 
+    // States to track thumbs-up and thumbs-down counts
+    const [thumbsUpCount, setThumbsUpCount] = useState(0);
+    const [thumbsDownCount, setThumbsDownCount] = useState(0);
+    // State to track user vote (none, up, or down)
+    const [userVote, setUserVote] = useState(null);
+    // Function to handle thumbs-up click
+    const handleThumbsUpClick = () => {
+        if (!isLoggedIn) {
+            alert('You must be logged in to like this post.');
+            return;
+        }
+        if (userVote === 'up') {
+            // User un-clicked thumbs-up
+            setThumbsUpCount((prevCount) => prevCount - 1);
+            setUserVote(null);
+        } else if (userVote === 'down') {
+            // User switches from thumbs-down to thumbs-up
+            setThumbsDownCount((prevCount) => prevCount - 1);
+            setThumbsUpCount((prevCount) => prevCount + 1);
+            setUserVote('up');
+        } else {
+            // User clicks thumbs-up for the first time
+            setThumbsUpCount((prevCount) => prevCount + 1);
+            setUserVote('up');
+        }
+    };
+    // Function to handle thumbs-down click
+    const handleThumbsDownClick = () => {
+        if (!isLoggedIn) {
+            alert('You must be logged in to like this post.');
+            return;
+        }
+        if (userVote === 'down') {
+            // User un-clicked thumbs-down
+            setThumbsDownCount((prevCount) => prevCount - 1);
+            setUserVote(null);
+        } else if (userVote === 'up') {
+            // User switches from thumbs-up to thumbs-down
+            setThumbsUpCount((prevCount) => prevCount - 1);
+            setThumbsDownCount((prevCount) => prevCount + 1);
+            setUserVote('down');
+        } else {
+            // User clicks thumbs-down for the first time
+            setThumbsDownCount((prevCount) => prevCount + 1);
+            setUserVote('down');
+        }
+    };
+
     return (
         <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
+         <div className="w-full relative"></div>
             <Card className="grid grid-cols-2 gap-5 p-5 border-2 rounded-lg w-full max-w-screen-lg mx-auto mt-10 bg-white">
             
 
@@ -27,9 +78,37 @@ const Post = (props) => {
                     />
 
                     {/* Icons */}
-                    <div className="flex justify-start text-2xl text-gray-500 pt-2 space-x-4">
-                        <span className="cursor-pointer">♡</span>
-                        <span className="cursor-pointer">💬</span>
+                    <div className="flex justify-start text-2xl text-gray-500 pt-2 space-x-6 items-center">
+                        {/* Thumbs-up Icon with Counter */}
+                        <div className="flex items-center space-x-2">
+                            <FontAwesomeIcon 
+                                icon={faThumbsUp} 
+                                className={`cursor-pointer ${
+                                    isLoggedIn
+                                        ? userVote === 'up'
+                                            ? 'text-orange-600'
+                                            : 'hover:text-orange-600'
+                                        : 'text-gray-300 cursor-not-allowed'
+                                }`}
+                                onClick={handleThumbsUpClick}
+                            />
+                            <span>{thumbsUpCount}</span> {/* Display thumbs-up count */}
+                        </div>
+                        {/* Thumbs-down Icon with Counter */}
+                        <div className="flex items-center space-x-2">
+                            <FontAwesomeIcon 
+                                icon={faThumbsDown} 
+                                className={`cursor-pointer ${
+                                    isLoggedIn
+                                        ? userVote === 'down'
+                                            ? 'text-red-600'
+                                            : 'hover:text-red-600'
+                                        : 'text-gray-300 cursor-not-allowed'
+                                }`}
+                                onClick={handleThumbsDownClick}
+                            />
+                            <span>{thumbsDownCount}</span> {/* Display thumbs-down count */}
+                        </div>
                         <span className="cursor-pointer ml-10">⎘</span>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Posts from "../Posts";
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 function GuestHomepage() {
     const [searchQuery, setSearchQuery] = useState('');
