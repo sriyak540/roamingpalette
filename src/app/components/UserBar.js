@@ -13,13 +13,6 @@ function UserBar({ username, onCreate, onFilter }) {
                 >
                     Create
                 </button>
-                
-                <button 
-                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
-                    onClick={onFilter}
-                >
-                    ≡ Filter
-                </button>
             </div>
         </div>
     );
