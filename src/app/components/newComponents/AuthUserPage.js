@@ -13,37 +13,6 @@ function AuthUserPage() {
     let token = sessionStorage.getItem('userId'); 
     const navigate = useNavigate();   
 
-    const addPostHandler = (newPost) => {
-      setPosts(prevPosts => [...prevPosts, newPost])
-    };
-
-    const handleCreate = () => {
-      setShowAddPost(true);
-      console.log("Create button clicked");
-    };
-
-    // const handleFilter = () => {
-    //     console.log("Filter button clicked");
-    // };
-
-    const filteredPosts = posts.filter((post) => {
-        post.tags.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-
-    const handleCancel = () => {
-        setShowAddPost(false);
-        // sessionStorage.removeItem('enteredLocationToken');
-        // sessionStorage.removeItem('enteredDescriptionToken');
-        // sessionStorage.removeItem('enteredTagsToken');
-        // sessionStorage.removeItem('selectedImageToken'); 
-    };
-
-    const handleLogout = () => {
-        navigate("/");
-        sessionStorage.removeItem('userId');
-        //sessionStorage.clear();
-    };
-
     const [posts, setPosts] = useState([
         {
             id: 0,
@@ -70,6 +39,31 @@ function AuthUserPage() {
             image: '/thai-curry-image.svg'
         },
     ]);
+
+    const filteredPosts = posts.filter((post) =>{
+        const tags = post.tags.toLowerCase();
+        const query = searchQuery.toLowerCase();
+        return tags.includes(query);
+    });
+
+    const addPostHandler = (newPost) => {
+        setPosts(prevPosts => [...prevPosts, newPost])
+    };
+
+    const handleCreate = () => {
+        setShowAddPost(true);
+        console.log("Create button clicked");
+    };
+
+    const handleCancel = () => {
+        setShowAddPost(false);
+    };
+
+    const handleLogout = () => {
+        navigate("/");
+        sessionStorage.removeItem('userId');
+        //sessionStorage.clear();
+    };
 
     return (
         <div>
