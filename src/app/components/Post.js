@@ -45,7 +45,14 @@ const Post = (props) => {
                         {/* Location */}
                         <h2 className="text-teal-700 hover:underline cursor-pointer flex items-center font-sans font-medium text-3xl mb-2 mt-5">
                             <span role="img" aria-label="location-pin" className="text-orange-500 pr-2">📍</span>
-                            {props.location}
+                            <a 
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(props.location)}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                            >
+                                {props.location}
+                            </a>
                         </h2>
 
                         {/* Description */}
