@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from './Button';
 import Card from './Card';
 
 const AddPost = ({username, onAddPost, onCancel}) => {
