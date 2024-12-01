@@ -19,7 +19,7 @@ app.get("/", (Req, res) => {
 
 app.use("/api/items", Routes);
 
-console.log("Mongodb_uri from .env", process.env.MONGODB_URI);
+console.log("MONGODB_URI from .env", process.env.MONGODB_URI);
 
 mongoose 
     .connect(process.env.MONGODB_URI || "")

@@ -1,5 +1,5 @@
-const express = require("express");
-const Post = require("../../../../models/postschema");
+import express from "express";
+import Post from "../../../../models/postschema";
 
 const router = express.Router();
 
@@ -45,4 +45,4 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
