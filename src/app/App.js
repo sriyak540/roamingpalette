@@ -1,9 +1,9 @@
 // src/App.js
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import GuestHomepage from './components/newComponents/GuestHomepage';
-import LoginPage from './components/newComponents/LoginPage'
-import AuthUserPage from './components/newComponents/AuthUserPage';
-import SignUpPage from './components/newComponents/SignUpPage'
+//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GuestHomepage from './components/newComponents/guesthomepage/page';
+import LoginPage from './components/newComponents/login/page'
+import AuthUserPage from './components/newComponents/authuser/page';
+import SignUpPage from './components/newComponents/signup/page'
 
 function App() {
     return (

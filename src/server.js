@@ -11,7 +11,7 @@ console.log("Environment loaded from .env");
 console.log("MONGODB_URI: ", process.env.MONGODB_URI);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 console.log("Express JSON middleware added");
@@ -39,4 +39,5 @@ mongoose
   });
 
 app.use("/api/items", Routes);
+app.use(cors({ origin: 'http://localhost:3000' }));
 console.log("Routes mounted: /api/items");
