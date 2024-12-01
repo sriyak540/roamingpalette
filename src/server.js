@@ -1,14 +1,8 @@
-
-const bodyParser = require("body-parser");
-const connectDB = require("./db"); // MongoDB connection file
-const postRoutes = require("./routes/posts"); // Post-related routes
-
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import Home from "./app/page"
-
 import Routes from "./app/api/items/[id]/routes";
 
 dotenv.config();
@@ -23,13 +17,11 @@ app.get("/", (Req, res) => {
     res.send(Home);
 })
 
-connectDB();
-
 app.use("/api/items", Routes);
 
 console.log("Mongodb_uri from .env", process.env.MONGODB_URI);
 
-mogoose 
+mongoose 
     .connect(process.env.MONGODB_URI || "")
     .then(() => {
         console.log("Connected to database");
