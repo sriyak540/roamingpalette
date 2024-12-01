@@ -1,32 +1,42 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
-import Home from "./app/page"
-import Routes from "./app/api/items/[id]/routes";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const path = require("path");
+const Routes = require("./app/api/items/[id]/routes");
 
 dotenv.config();
+
+console.log("Environment loaded from .env");
+console.log("MONGODB_URI: ", process.env.MONGODB_URI);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
 app.use(express.json());
+console.log("Express JSON middleware added");
 
-app.get("/", (Req, res) => {
-    res.send(Home);
-})
+// Test route
+app.get("/", (req, res) => {
+  console.log("Root route hit");  
+  res.send("Hello, world!");
+});
+
+// Log when the server starts listening
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
+});
+
+// MongoDB connection test with added logging for the process
+mongoose
+  .connect(process.env.MONGODB_URI || "", {})
+  .then(() => {
+    console.log("Connected to MongoDB successfully");
+  })
+  .catch((e) => {
+    console.error("Database connection failed", e);
+    process.exit(1);
+  });
 
 app.use("/api/items", Routes);
-
-console.log("MONGODB_URI from .env", process.env.MONGODB_URI);
-
-mongoose 
-    .connect(process.env.MONGODB_URI || "")
-    .then(() => {
-        console.log("Connected to database");
-        app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        })
-    })
-    .catch((e) => console.error("Database connection failed", e));
+console.log("Routes mounted: /api/items");

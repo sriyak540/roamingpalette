@@ -1,4 +1,5 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const PostSchema = new Schema({
     username: {
@@ -22,4 +23,4 @@ const PostSchema = new Schema({
     },
 });
 
-export default mongoose.model("Posts", PostSchema);
+module.exports = mongoose.model("Posts", PostSchema);

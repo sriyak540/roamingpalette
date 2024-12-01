@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import PostSchema from "./postschema";
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
     username: {
@@ -20,4 +20,4 @@ const UserSchema = new Schema({
     },
 });
 
-export default mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
