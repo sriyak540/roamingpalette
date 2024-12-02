@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Posts from "../Posts";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,35 +7,67 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 function GuestHomepage() {
     const [searchQuery, setSearchQuery] = useState('');
 
-    const [posts] = useState([
-        {
-            id: 0,
-            username: 'user1',
-            location: 'Ramen Shop, City, County, Zip',
-            description: 'While the tender, curly noodles and warm savory broth build the foundation of a good ramen soup, the toppings and mix-ins make it just plain fun and can take the flavors of your bowl in a million and one directions.',
-            tags: 'ramen ramennoodles noodles vegetarian city country',
-            image: '/ramen-image.svg'
-        }, 
-        {
-            id: 1, 
-            username: 'user2',
-            location: 'Burger Shop, City, County, Zip',
-            description: 'Huddled on the couch of a cosy local book store, he declared his signature dish to be the Fried Chicken. We enthused over how remarkably un-greasy it is and marvelled at how it’s crunchy all over, unlike KFC which we eeewed about how the skin has greasy soggy patches.',
-            tags: 'burger chickenburger burgershop city country burgershop',
-            image: '/burger-image.svg'
-        }, 
-        {
-            id: 2,
-            username: 'user3',
-            location: 'Thai Food, City, County, Zip',
-            description: 'Vegan Thai Green Curry',
-            tags: 'thaigreencurry curry thaifood veganfood vegancurry',
-            image: '/thai-curry-image.svg'
-        },
-    ]);
+   const initalPosts = [
 
-    const filteredPosts = posts.filter((post) =>{
-        const tags = post.tags.toLowerCase();
+    {
+        _id: 0,
+        username: 'user1',
+        location: 'Ramen Shop, City, County, Zip',
+        description: 'While the tender, curly noodles and warm savory broth build the foundation of a good ramen soup, the toppings and mix-ins make it just plain fun and can take the flavors of your bowl in a million and one directions.',
+        tags: ['ramen', 'ramennoodles', 'noodles', 'vegetarian', 'city', 'country'],
+        image: '/ramen-image.svg'
+    }, 
+    {
+        _id: 1, 
+        username: 'user2',
+        location: 'Burger Shop, City, County, Zip',
+        description: 'Huddled on the couch of a cosy local book store, he declared his signature dish to be the Fried Chicken. We enthused over how remarkably un-greasy it is and marvelled at how it’s crunchy all over, unlike KFC which we eeewed about how the skin has greasy soggy patches.',
+        tags: ['burger', 'chickenburger', 'burgershop', 'city', 'country'], 
+        image: '/burger-image.svg'
+    }, 
+    {
+        _id: 2,
+        username: 'user3',
+        location: 'Thai Food, City, County, Zip',
+        description: 'Vegan Thai Green Curry',
+        tags: ['thaigreencurry', 'curry', 'thaifood', 'veganfood', 'vegancurry'],
+        image: '/thai-curry-image.svg'
+    },
+    ];
+
+    const [posts,setPosts] = useState(initalPosts);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await fetch("/api/items/posts"); // Adjust the URL to match your backend route
+                const data = await response.json();
+
+                if (response.ok) {
+                    setPosts((prevPosts) => {
+                        const allPosts = [...prevPosts, ...data];
+                        const uniquePosts = Array.from(new Set(allPosts.map(post => post._id)))
+                            .map(id => allPosts.find(post => post._id === id));
+                        return uniquePosts;
+                    });
+                } else {
+                    console.error("Failed to fetch posts:", data.error || "Unknown error");
+                }
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
+    // const filteredPosts = posts.filter((post) =>{
+    //     const tags = post.tags.toLowerCase();
+    //     const query = searchQuery.toLowerCase();
+    //     return tags.includes(query);
+    // });
+    const filteredPosts = posts.filter((post) => {
+        const tags = Array.isArray(post.tags) ? post.tags.join(" ").toLowerCase() : post.tags?.toLowerCase() || "";
         const query = searchQuery.toLowerCase();
         return tags.includes(query);
     });

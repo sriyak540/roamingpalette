@@ -51,6 +51,16 @@ router.get("/posts/:id", async (req, res) => {
     }
 });
 
+router.get("/posts", async (req, res) => {
+    try {
+        const post = await Post.find();
+        res.status(200).json(post);
+    } catch (error) {
+        console.error("Error fetching post:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
 router.post("/posts/:id/vote", async (req, res) => {
     const { vote } = req.body; // "up" or "down"
 
