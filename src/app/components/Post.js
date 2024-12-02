@@ -112,7 +112,7 @@ const Post = (props) => {
                             />
                             <span>{thumbsDownCount}</span> {/* Display thumbs-down count */}
                         </div>
-                        <span className="cursor-pointer ml-10">⎘</span>
+                        
                     </div>
                 </div>
 
