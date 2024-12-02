@@ -4,10 +4,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const next = require("next");
 
-// const Routes = require("./app/api/items/[id]/routes");
+const PostRoutes = require("./app/api/items/[id]/routes");
 const UserRoutes = require("./app/api/users/routes");
 
 dotenv.config();
+require("dotenv").config();
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -33,7 +34,7 @@ app.prepare().then(() => {
   server.use(express.json());
   server.use(cors());
 
-  // server.use("api/items", Routes);
+  server.use("/api/items", PostRoutes);
   server.use("/api/users", UserRoutes);
 
   server.all("*", (req, res) => {

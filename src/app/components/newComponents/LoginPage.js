@@ -7,16 +7,37 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (username && password) {
-            setUsername(username);
-            setPassword(password);
-            navigate("/user");
-            sessionStorage.setItem('userId', username);
-        } else {
-            alert("Please enter a username and password.");
+
+        if (!username || !password) {
+            alert("Please fill all fields.");
+            return;
         }
+
+        try {
+            const response = await fetch("/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                alert("Login successful!");
+                sessionStorage.setItem('userId', data.username);
+                sessionStorage.setItem('token', data.token);
+                navigate("/user");
+            } else {
+                alert(data.error || "Login failed.");
+            }
+        } catch (err) {
+            console.error("Error during login:", err);
+            alert("An error occurred. Please try again later.");
+        };
     };
     
     return (

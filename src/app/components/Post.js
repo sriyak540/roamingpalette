@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
@@ -13,46 +13,50 @@ const Post = (props) => {
     const [thumbsDownCount, setThumbsDownCount] = useState(0);
     // State to track user vote (none, up, or down)
     const [userVote, setUserVote] = useState(null);
-    // Function to handle thumbs-up click
-    const handleThumbsUpClick = () => {
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`/api/items/posts/${id}`);
+                const data = await response.json();
+                setThumbsUpCount(data.thumbsUp);
+                setThumbsDownCount(data.thumbsDown);
+            } catch (error) {
+                console.error("Error fetching post data:", error);
+            }
+        };
+
+        fetchPost();
+    }, [id]);
+
+    const handleVote = async (vote) => {
         if (!isLoggedIn) {
-            alert('You must be logged in to like this post.');
+            alert("You must be logged in to vote.");
             return;
         }
-        if (userVote === 'up') {
-            // User un-clicked thumbs-up
-            setThumbsUpCount((prevCount) => prevCount - 1);
-            setUserVote(null);
-        } else if (userVote === 'down') {
-            // User switches from thumbs-down to thumbs-up
-            setThumbsDownCount((prevCount) => prevCount - 1);
-            setThumbsUpCount((prevCount) => prevCount + 1);
-            setUserVote('up');
-        } else {
-            // User clicks thumbs-up for the first time
-            setThumbsUpCount((prevCount) => prevCount + 1);
-            setUserVote('up');
-        }
-    };
-    // Function to handle thumbs-down click
-    const handleThumbsDownClick = () => {
-        if (!isLoggedIn) {
-            alert('You must be logged in to like this post.');
-            return;
-        }
-        if (userVote === 'down') {
-            // User un-clicked thumbs-down
-            setThumbsDownCount((prevCount) => prevCount - 1);
-            setUserVote(null);
-        } else if (userVote === 'up') {
-            // User switches from thumbs-up to thumbs-down
-            setThumbsUpCount((prevCount) => prevCount - 1);
-            setThumbsDownCount((prevCount) => prevCount + 1);
-            setUserVote('down');
-        } else {
-            // User clicks thumbs-down for the first time
-            setThumbsDownCount((prevCount) => prevCount + 1);
-            setUserVote('down');
+
+        try {
+            const response = await fetch(`/api/items/posts/${id}/vote`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ vote }),
+            });
+
+            const data = await response.json();
+
+            if (vote === "up") {
+                setThumbsUpCount(data.thumbsUp);
+                setThumbsDownCount(data.thumbsDown);
+                setUserVote("up");
+            } else if (vote === "down") {
+                setThumbsUpCount(data.thumbsUp);
+                setThumbsDownCount(data.thumbsDown);
+                setUserVote("down");
+            }
+        } catch (error) {
+            console.error("Error updating vote:", error);
         }
     };
 
@@ -60,8 +64,7 @@ const Post = (props) => {
         <div className="w-full relative"> {/* Make the div relative for positioning the delete button */}
          <div className="w-full relative"></div>
             <Card className="grid grid-cols-2 gap-5 p-5 border-2 rounded-lg w-full max-w-screen-lg mx-auto mt-10 bg-white">
-            
-
+        
                 {/* Left Section: Image and Icons */}
                 <div className="space-y-4">
                     {/* User Info */}
@@ -90,7 +93,7 @@ const Post = (props) => {
                                             : 'hover:text-orange-600'
                                         : 'text-gray-300 cursor-not-allowed'
                                 }`}
-                                onClick={handleThumbsUpClick}
+                                onClick={() => handleVote("up")}
                             />
                             <span>{thumbsUpCount}</span> {/* Display thumbs-up count */}
                         </div>
@@ -105,7 +108,7 @@ const Post = (props) => {
                                             : 'hover:text-red-600'
                                         : 'text-gray-300 cursor-not-allowed'
                                 }`}
-                                onClick={handleThumbsDownClick}
+                                onClick={() => handleVote("down")}
                             />
                             <span>{thumbsDownCount}</span> {/* Display thumbs-down count */}
                         </div>
@@ -117,8 +120,10 @@ const Post = (props) => {
                 <div className="relative flex flex-col justify-between pl-5">
                     {isLoggedIn && props.name == token && (
                         <button
-                            //onClick={handleDelete(props.username)}
-                            onClick={onDelete}
+                        onClick={() => {
+                                console.log("Deleting post with ID:", id); // Debug log
+                                onDelete(id); // Pass the post ID to onDelete
+                            }}
                             className="absolute mt-2 right-2 text-red-600 hover:text-red-800 text-2xl font-bold"
                         >
                             X

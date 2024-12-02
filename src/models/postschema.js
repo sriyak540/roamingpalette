@@ -21,6 +21,14 @@ const PostSchema = new Schema({
     tags: {
         type: [String],
     },
+    thumbsUp: { 
+        type: Number, 
+        default: 0 
+    },
+    thumbsDown: { 
+        type: Number, 
+        default: 0 
+    },
 });
 
 module.exports = mongoose.model("Posts", PostSchema);

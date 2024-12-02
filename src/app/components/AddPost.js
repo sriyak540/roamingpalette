@@ -8,32 +8,23 @@ const AddPost = ({username, onAddPost, onCancel}) => {
     const [selectedImage, setImage] = useState('');
     const [enteredLocation, setLocation] = useState('');
 
-    // let enteredDescriptionToken = sessionStorage.getItem('enteredDescription');
-    // let enteredTagsToken = sessionStorage.getItem('enteredTags'); 
-    // let selectedImageToken = sessionStorage.getItem('selectedImage');
-    // let enteredLocationToken = sessionStorage.getItem('enteredLocation');
-
     const descriptionHandler = (event) => {
         setDescription(event.target.value);
-        // sessionStorage.setItem('enteredDescription', enteredDescription);
     };
     
     const tagHandler = (event) => {
         setTags(event.target.value);
-        // sessionStorage.setItem('enteredTags', enteredTags);
     };
 
     const imageHandler = (event) => {
         setImage(event.target.value);
-        // sessionStorage.setItem('selectedImage', selectedImage);
     };
 
     const locationHandler = (event) => {
         setLocation(event.target.value);
-        // sessionStorage.setItem('enteredLocation', enteredLocation);
     };
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
         const post_data = {
@@ -44,12 +35,29 @@ const AddPost = ({username, onAddPost, onCancel}) => {
             image: selectedImage
         };
 
-        onAddPost(post_data); // Call parent component's function to add post to the list
-        console.log(post_data); // Log post data to console for verification
-        onCancel();
+        try {
+            const response = await fetch("/api/items/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(post_data),
+            });
 
-        // clear form
-        //setPostingUser('');
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Post created successfully", data.post);
+                onAddPost(data.post);
+                onCancel();
+            } else {
+                alert(data.error || "Failer to create post");
+            }
+        } catch (e) {
+            console.error("Error creating post:", e);
+            alert("An error occured. Please try again.");
+        }
+
         setDescription('');
         setTags('');
         setImage('');

@@ -41,17 +41,33 @@ function AuthUserPage() {
     ]);
 
     const filteredPosts = posts.filter((post) =>{
-        const tags = post.tags.toLowerCase();
         const query = searchQuery.toLowerCase();
-        return tags.includes(query);
+        const tagsArray = Array.isArray(post.tags) ? post.tags : post.tags?.split(" ") || [];
+        return tagsArray.some((tag) => tag.toLowerCase().includes(query));
     });
 
     const addPostHandler = (newPost) => {
-        setPosts(prevPosts => [...prevPosts, newPost])
+        setPosts((prevPosts) => [...prevPosts, newPost]);
     };
 
-    const deletePostHandler = (postId) => {
-        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    const deletePostHandler = async (postId) => {
+        try {
+            const response = await fetch(`/api/items/${postId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+                alert("Post deleted successfully");
+            } else {
+                const data = await response.json();
+                alert(data.error || "Failed to delete post");
+            }
+        } catch (e) {
+            console.error("Error deleting post:", error);
+            alert("An error occurred. Please try again.");
+        }
+        //setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     }
 
     const handleCreate = () => {
@@ -107,8 +123,7 @@ function AuthUserPage() {
             <div className="w-full p-5 shadow-slate-50 rounded-lg mt-5 mr-auto">
                 <UserBar 
                     username={token} 
-                    onCreate={handleCreate} 
-                    // onFilter={handleFilter} 
+                    onCreate={handleCreate}
                 />
             
                 {showAddPost && (

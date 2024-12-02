@@ -8,15 +8,15 @@ const Posts = (props) => {
         <div> 
             {items.map((post) => (
                 <Post
-                    key={post.id}
-                    id={post.id} 
+                    key={post._id}
+                    id={post._id} 
                     name={post.username}
                     img={post.image}
                     location={post.location}
                     description={post.description}
-                    tags={post.tags.split(" ")}
+                    tags={Array.isArray(post.tags) ? post.tags : []}
                     isLoggedIn={isLoggedIn} 
-                    onDelete={() => onDelete(post.id)} 
+                    onDelete={onDelete} 
                 />
             ))}
         </div>
