@@ -15,9 +15,6 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    posts: {
-        type: [PostSchema],
-    },
 });
 
 module.exports = mongoose.model("User", UserSchema);

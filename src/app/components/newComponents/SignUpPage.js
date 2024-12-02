@@ -1,24 +1,44 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
+
+
 function SignUpPage() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [pfp, setProfilePic] = useState('');
     const navigate = useNavigate();
     
-    const handleCreateAccount = (e) => {
+    const handleCreateAccount = async (e) => {
         e.preventDefault();
-        if (username && password) {
-            setUsername(username);
-            setPassword(password);
-            setEmail(email);
-            navigate("/user");
-            sessionStorage.setItem('userId', username);
-        } else {
-            alert("Please enter a username and password.");
+
+        if (!username || !password || !email) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password, email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Account created successfuly!");
+                navigate("/user");
+                sessionStorage.setItem("userId", username);
+            } else {
+                alert(data.error || "Failed to create account");
+            }
+        } catch (e) {
+            console.error("Error creating account:", e);
+            alert("An error occured. Please try again later.");
         }
     };
     
@@ -32,7 +52,7 @@ function SignUpPage() {
 
                 <div className="flex items-center space-x-4 z-20"> 
                     <Link to="/"><button type="submit" className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold">Return to Guest Home</button></Link>
-                    <Link to="/login"><button type="submit" className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold">Return to Login</button></Link>
+                    <Link to="/login"><button type="submit" className="p-3 pr-4 pl-4 hover:underline cursor-pointer bg-orange-300 rounded-lg text-black font-sans font-semibold">Go to Login</button></Link>
                 </div>
             </header>
 
